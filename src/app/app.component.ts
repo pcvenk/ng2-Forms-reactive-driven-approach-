@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   signupForm: FormGroup;
   forbiddenUsers: ['Max', 'Maximilian'];
 
-  constructor(private formBuilder: FormBuilder) {}
+  // constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.signupForm = new FormGroup({
