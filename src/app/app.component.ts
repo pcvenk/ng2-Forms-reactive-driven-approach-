@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +9,14 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angul
 export class AppComponent implements OnInit {
   genders = ['male', 'female'];
   signupForm: FormGroup;
-  forbiddenUsers: ['Max', 'Maximilian'];
+  forbiddenUsernames = ['Chris', 'Anna'];
 
-  // constructor(private formBuilder: FormBuilder) {}
+  constructor() {}
 
   ngOnInit() {
     this.signupForm = new FormGroup({
       'userData': new FormGroup({
-        'username': new FormControl(null, Validators.required),
+        'username': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
         'email': new FormControl(null, [Validators.required, Validators.email])
       }),
       'gender': new FormControl('male'),
@@ -34,12 +34,12 @@ export class AppComponent implements OnInit {
     // the array has to be explicitly casted to work
     (<FormArray>this.signupForm.get('hobbies')).push(control);
   }
-  //
-  // forbiddenNames(control: FormControl): {[s: string]: boolean} {
-  //
-  //   // if (this.forbiddenUsers.indexOf(control.value) !== -1) {
-  //   //   return {'nameIsForbidden': true};
-  //   // }
-  //   // return null;
-  // }
+
+  forbiddenNames(control: FormControl): {[s: string]: boolean} {
+    if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
+      return {'nameIsForbidden': true};
+    }
+    return null;
+  }
+
 }
